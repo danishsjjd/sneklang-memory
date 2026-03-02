@@ -49,6 +49,22 @@ void* stack_pop(stack_mt* stack) {
   return stack->data[stack->count];
 }
 
+void stack_remove_nulls(stack_mt* stack) {
+  if (stack == NULL || stack->count == 0) {
+    return;
+  }
+
+  int write_index = 0;
+  for (int read_index = 0; read_index < stack->count; read_index++) {
+    if (stack->data[read_index] != NULL) {
+      stack->data[write_index] = stack->data[read_index];
+      write_index += 1;
+    }
+  }
+
+  stack->count = write_index;
+}
+
 void stack_free(stack_mt* stack) {
   if (stack == NULL) {
     return;
